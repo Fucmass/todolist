@@ -33,5 +33,11 @@ def delete(task_id):
     tasks.pop(task_id)
     return redirect(url_for('index'))
 
+@app.route('/snake')
+def snake():
+    return render_template('snake.html')
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)

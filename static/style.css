@@ -28,7 +28,6 @@ li {
 }
 
 .done {
-    text-decoration: line-through;
     color: gray;
 }
 
@@ -39,4 +38,8 @@ a{
     color: inherit;
     padding: 5px;
     border-radius: 5px;
+}
+
+#konfetti {
+    margin-top: 20%;
 }

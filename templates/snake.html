@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oops! Here's Snake 🐍</title>
+    <style>
+        canvas {
+            background: #000;
+            display: block;
+            margin: 50px auto;
+        }
+        body {
+            text-align: center;
+            color: white;
+            background-color: #111;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>Oops, noe gikk galt 😅</h1>
+    <p>Men her er Snake mens du venter!</p>
+    <a href="{{ url_for('index') }}">Tilbake</a>
+    <canvas id="game" width="400" height="400"></canvas>
+
+    <a href="{{ url_for('snake') }}">Spill igjen</a>
+
+    <script>
+        const canvas = document.getElementById('game');
+        const ctx = canvas.getContext('2d');
+        const box = 20;
+        let snake = [{ x: 9 * box, y: 10 * box }];
+        let food = {
+            x: Math.floor(Math.random() * 19 + 1) * box,
+            y: Math.floor(Math.random() * 19 + 1) * box
+        };
+        let direction = null;
+
+        document.addEventListener("keydown", event => {
+            if (event.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
+            else if (event.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+            else if (event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
+            else if (event.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+        });
+
+        function draw() {
+            ctx.fillStyle = "#000";
+            ctx.fillRect(0, 0, 400, 400);
+
+            for (let i = 0; i < snake.length; i++) {
+                ctx.fillStyle = i === 0 ? "#0f0" : "#0b0";
+                ctx.fillRect(snake[i].x, snake[i].y, box, box);
+            }
+
+            ctx.fillStyle = "#f00";
+            ctx.fillRect(food.x, food.y, box, box);
+
+            let head = { x: snake[0].x, y: snake[0].y };
+
+            if (direction === "UP") head.y -= box;
+            if (direction === "DOWN") head.y += box;
+            if (direction === "LEFT") head.x -= box;
+            if (direction === "RIGHT") head.x += box;
+
+            // Game over
+            if (head.x < 0 || head.x >= 400 || head.y < 0 || head.y >= 400 ||
+                snake.some((s, index) => index !== 0 && s.x === head.x && s.y === head.y)) {
+                clearInterval(game);
+                alert("Game over! Refresh to try again.");
+            }
+
+            snake.unshift(head);
+
+            if (head.x === food.x && head.y === food.y) {
+                food = {
+                    x: Math.floor(Math.random() * 19 + 1) * box,
+                    y: Math.floor(Math.random() * 19 + 1) * box
+                };
+            } else {
+                snake.pop();
+            }
+        }
+        // Legg til i script.js
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'k') {
+    alert("Du fant påskeegget! 🥚🎉");
+    window.location.href = '/snake';
+  }
+});
+
+        const game = setInterval(draw, 100);
+    </script>
+</body>
+</html>
