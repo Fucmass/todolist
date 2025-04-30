@@ -7,10 +7,14 @@ body {
 input {
     padding: 8px;
     width: 200px;
+    border-radius: 5px;
+
 }
 
 button {
     padding: 8px 12px;
+    border-radius: 5px;
+    
 }
 
 ul {
@@ -26,4 +30,13 @@ li {
 .done {
     text-decoration: line-through;
     color: gray;
+}
+
+
+a{
+    background-color: rgb(188, 183, 183);
+    text-decoration: none;
+    color: inherit;
+    padding: 5px;
+    border-radius: 5px;
 }

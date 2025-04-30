@@ -2,7 +2,7 @@
 <html lang="no">
 <head>
     <meta charset="UTF-8">
-    <title>To-Do App</title>
+    <title>To-Do App med Kategorier</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -10,17 +10,26 @@
 
     <form action="/add" method="POST">
         <input type="text" name="task" placeholder="Ny oppgave" required>
+        <select name="category">
+            <option value="Skole">Skole</option>
+            <option value="Trening">Trening</option>
+            <option value="Personlig">Personlig</option>
+            <option value="">Uten kategori</option>
+        </select>
         <button type="submit">Legg til</button>
     </form>
 
-    <ul>
-        {% for task in tasks %}
-            <li class="{{ 'done' if task.done }}">
-                {{ task.text }}
-                <a href="/toggle/{{ loop.index0 }}">[Ferdig]</a>
-                <a href="/delete/{{ loop.index0 }}">[Slett]</a>
-            </li>
-        {% endfor %}
-    </ul>
+    {% for category, tasks in categorized_tasks.items() %}
+        <h2>{{ category }}</h2>
+        <ul>
+            {% for task in tasks %}
+                <li class="{{ 'done' if task.done }}">
+                    {{ task.text }}
+                    <a href="/toggle/{{ task.id }}">[Ferdig]</a>
+                    <a href="/delete/{{ task.id }}">[Slett]</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
 </body>
 </html>
