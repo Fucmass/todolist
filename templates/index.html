@@ -1,17 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>To-Do App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<<<<<<< Updated upstream
-    <h1>hello word</h1>
-    <input type="text" id="input" placeholder="Enter something...">
-    <button id="submit">Submit</button>
-=======
-    <input type="text">
->>>>>>> Stashed changes
+    <h1>To-do-liste</h1>
+
+    <form action="/add" method="POST">
+        <input type="text" name="task" placeholder="Ny oppgave" required>
+        <button type="submit">Legg til</button>
+    </form>
+
+    <ul>
+        {% for task in tasks %}
+            <li class="{{ 'done' if task.done }}">
+                {{ task.text }}
+                <a href="/toggle/{{ loop.index0 }}">[Ferdig]</a>
+                <a href="/delete/{{ loop.index0 }}">[Slett]</a>
+            </li>
+        {% endfor %}
+    </ul>
 </body>
-</html>æ
+</html>
